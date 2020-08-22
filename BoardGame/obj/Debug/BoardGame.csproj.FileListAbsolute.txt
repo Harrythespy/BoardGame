@@ -1,0 +1,6 @@
+/Users/harryshen/Documents/codes/c#/BoardGame/BoardGame/bin/Debug/BoardGame.exe
+/Users/harryshen/Documents/codes/c#/BoardGame/BoardGame/bin/Debug/BoardGame.pdb
+/Users/harryshen/Documents/codes/c#/BoardGame/BoardGame/obj/Debug/BoardGame.csprojAssemblyReference.cache
+/Users/harryshen/Documents/codes/c#/BoardGame/BoardGame/obj/Debug/BoardGame.exe
+/Users/harryshen/Documents/codes/c#/BoardGame/BoardGame/obj/Debug/BoardGame.pdb
+/Users/harryshen/Documents/codes/c#/BoardGame/BoardGame/obj/Debug/BoardGame.csproj.CoreCompileInputs.cache
