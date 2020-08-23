@@ -7,24 +7,31 @@ namespace BoardGame
 {
     public class History
     {
-        Dictionary<string, Point> gameHistory = new Dictionary<string, Point>();
+        private const string FILENAME = "BoardHistory.txt";
+        public List<Point> gameHistory = new List<Point>();
 
         public History(){}
 
-        public void recordStep(string piece, Point coordinate)
+        public void recordStep(Point coordinate)
         {
             // Save current move to history
-            gameHistory.Add(piece, coordinate);
+            gameHistory.Add(coordinate);
+            foreach(Point coor in gameHistory)
+            {
+                System.Console.WriteLine($"X:{coor.X} Y: {coor.Y}");
+            }
         }
 
-        public void removeStep()
+        public void undoStep(Point coordinate)
         {
             // undo the current step
+            gameHistory.Remove(coordinate);
         }
 
         public void saveHistory()
         {
             // Export current board states
+            System.Console.WriteLine(gameHistory.ToArray());
         }
 
         public void loadHistory()

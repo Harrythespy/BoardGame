@@ -5,7 +5,7 @@ namespace BoardGame
 {
     public class GomokuRule : Rule
     {
-        private string winner;
+
         public GomokuRule(){}
 
         public string[,] initialiBoard()
@@ -89,9 +89,9 @@ namespace BoardGame
             }
         }
 
-        public void CheckWinner()
+        public bool checkWinner()
         {
-            System.Console.WriteLine($"Winner is {winner}");
+            return false;
         }
     }
 }

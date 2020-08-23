@@ -6,6 +6,6 @@ namespace BoardGame
     {
         string[,] initialiBoard();
         void updateBoard(string[,] boardState);
-        void CheckWinner();
+        bool checkWinner();
     }
 }

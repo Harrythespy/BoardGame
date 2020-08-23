@@ -10,8 +10,6 @@ namespace BoardGame
         public static void Main(string[] args)
         {
             const string END = "END";
-            const string FILEPATH = "Users/harryshen/Downloads/";
-            string FILENAME = "";
 
             // Games that can play in the program.
             string[] games = { "Gomoku" , "Othello", "Mills" };
@@ -59,7 +57,7 @@ namespace BoardGame
             // Initial the selected game
             Game game = new Game(rule, isComputer, isBlack);
             game.initialGame();
-            
+
         }
 
         public static bool selectedCompetitor()
