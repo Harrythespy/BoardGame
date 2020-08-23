@@ -89,6 +89,7 @@ namespace BoardGame
                 history.recordStep(coordinate);
                 // update the board state
                 _Rule.updateBoard(_BoardState);
+                history.saveHistory();
             } while (!_Rule.checkWinner());
         }
 

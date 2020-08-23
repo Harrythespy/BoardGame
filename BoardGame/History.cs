@@ -16,10 +16,6 @@ namespace BoardGame
         {
             // Save current move to history
             gameHistory.Add(coordinate);
-            foreach(Point coor in gameHistory)
-            {
-                System.Console.WriteLine($"X:{coor.X} Y: {coor.Y}");
-            }
         }
 
         public void undoStep(Point coordinate)
@@ -31,7 +27,15 @@ namespace BoardGame
         public void saveHistory()
         {
             // Export current board states
-            System.Console.WriteLine(gameHistory.ToArray());
+            FileStream outFile = new FileStream(FILENAME, FileMode.Create, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(outFile);
+            foreach(Point coor in gameHistory)
+            {
+                System.Console.WriteLine(coor);
+                writer.WriteLine(coor);
+            }
+            writer.Close();
+            outFile.Close();
         }
 
         public void loadHistory()
