@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace BoardGame
 {
@@ -6,6 +7,6 @@ namespace BoardGame
     {
         string[,] initialiBoard();
         void updateBoard(string[,] boardState);
-        bool checkWinner();
+        bool checkWinner(string[,] boardState, Point coordinate, Piece piece);
     }
 }

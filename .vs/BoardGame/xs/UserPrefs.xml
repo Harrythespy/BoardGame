@@ -2,8 +2,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="BoardGame/History.cs">
     <Files>
       <File FileName="BoardGame/Program.cs" Line="60" Column="1" />
-      <File FileName="BoardGame/BoardGame.cs" Line="80" Column="18" />
-      <File FileName="BoardGame/History.cs" Line="22" Column="14" />
+      <File FileName="BoardGame/BoardGame.cs" Line="62" Column="30" />
+      <File FileName="BoardGame/History.cs" Line="38" Column="29" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace BoardGame
 {
     public class WhitePiece : Piece
@@ -8,10 +9,10 @@ namespace BoardGame
         public WhitePiece()
         {
         }
-
+        
         public string printPiece()
         {
-            return this._WhitePiece;
+            return _WhitePiece;
         }
     }
 }

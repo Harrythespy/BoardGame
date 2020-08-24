@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using static System.Console;
 
 namespace BoardGame
@@ -89,9 +90,97 @@ namespace BoardGame
             }
         }
 
-        public bool checkWinner()
+        public bool checkWinner(string[,] boardState, Point coordinate, Piece piece)
         {
-            return false;
+            string _Piece = piece.printPiece();
+            // check horizontal
+            bool horizontal = checkHorizontal(boardState, coordinate, _Piece);
+            bool vertical = checkVertical(boardState, coordinate, _Piece);
+            bool obliqueDown = checkObliqueDown(boardState, coordinate, _Piece);
+            bool obliqueUp = checkObliqueUp(boardState, coordinate, _Piece);
+            if (horizontal || vertical || obliqueDown || obliqueUp) return true;
+            else return false;
+        }
+
+        private bool checkHorizontal(string[,] boardState, Point coordinate, string piece)
+        {
+            int countPiece = 0;
+            // search forward
+            for (int i = coordinate.Y - 1; i >= 0; i--)
+            {
+                if (boardState[coordinate.X, i] == piece) ++countPiece;
+            }
+            // search backward
+            for (int i = coordinate.Y + 1; i < boardState.GetLength(1); i++)
+            {
+                if (boardState[coordinate.X, i] == piece) ++countPiece;
+            }
+            if (countPiece >= 4) return true;
+            else return false;
+        }
+
+        private bool checkVertical(string[,] boardState, Point coordinate, string piece)
+        {
+            int countPiece = 0;
+            // search forward
+            for (int i = coordinate.X - 1; i >= 0; i--)
+            {
+                if (boardState[i, coordinate.Y] == piece) ++countPiece;
+            }
+            // search backward
+            for (int i = coordinate.X + 1; i < boardState.GetLength(0); i++)
+            {
+                if (boardState[i, coordinate.Y] == piece) ++countPiece;
+            }
+            if (countPiece >= 4) return true;
+            else return false;
+        }
+
+        private bool checkObliqueDown(string[,] boardState, Point coordinate, string piece)
+        {
+            int countPiece = 0;
+            // search forward
+            int j = coordinate.Y - 1;
+            for (int i = coordinate.X - 1; i >= 0; i--, j--)
+            {
+                if (j >= 0)
+                {
+                    if (boardState[i, j] == piece) countPiece++;
+                }
+            }
+            j = coordinate.Y + 1;
+            for (int i = coordinate.X + 1; i < boardState.GetLength(0); i++, j++)
+            {
+                if (j < boardState.GetLength(1))
+                {
+                    if (boardState[i, j] == piece) countPiece++;
+                }
+            }
+            if (countPiece >= 4) return true;
+            else return false;
+        }
+
+        private bool checkObliqueUp(string[,] boardState, Point coordinate, string piece)
+        {
+            int countPiece = 0;
+            int j = coordinate.Y + 1;
+            for (int i = coordinate.X - 1; i >= 0; i--, j++)
+            {
+                if (j < boardState.GetLength(1))
+                {
+                    if (boardState[i, j] == piece) countPiece++;
+                }
+            }
+            j = coordinate.Y - 1;
+            for (int i = coordinate.X + 1; i < boardState.GetLength(0); i++, j--)
+            {
+                if (j >= 0)
+                {
+                    if (boardState[i, j] == piece) countPiece++;
+                }
+            }
+            if (countPiece >= 4) return true;
+            else return false;
         }
     }
 }

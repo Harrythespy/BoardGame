@@ -9,7 +9,7 @@ namespace BoardGame
         protected Human _Player1;
         protected Player _Competitor;
         protected Piece _CompeitorColour;
-        protected int _CurrentSteps = 0;
+        protected int _CurrentSteps = 1;
         protected Rule _Rule;
         protected string[,] _BoardState;
         protected History history = new History();
@@ -57,17 +57,20 @@ namespace BoardGame
 
         public void initialGame()
         {
+            // decide player term
+            Player player;
+            Point coordinate;
             _Rule.updateBoard(_BoardState);
             do
             {
-                _CurrentSteps++;
-                while(_CurrentSteps > 1)
+                while (_CurrentSteps > 1)
                 {
+                    // undo the previous step
                     Write($"Undo the previous step? Y/n >> ");
                     string userInput = ReadLine();
                     if (userInput == "Y" || userInput == "y")
                     {
-                        --_CurrentSteps;
+                        _CurrentSteps--;
                         Point prevStep = history.gameHistory[_CurrentSteps - 1];
                         history.undoStep(prevStep);
                         _BoardState[prevStep.X, prevStep.Y] = " ";
@@ -78,19 +81,22 @@ namespace BoardGame
                         break;
                     }
                 }
-                // Decide whether the player want to undo or save the game
-                // decide player term
-                Player player = _CurrentSteps % 2 == 0 ? _Competitor : _Player1;
+                player = _CurrentSteps % 2 == 0 ? _Competitor : _Player1;
                 displayTerms();
                 // get the coordinate from player
-                Point coordinate = player.getCoordinate(_BoardState);
+                coordinate = player.getCoordinate(_BoardState);
                 _BoardState[coordinate.X, coordinate.Y] = player.Piece.printPiece();
                 // store new state to history
                 history.recordStep(coordinate);
                 // update the board state
                 _Rule.updateBoard(_BoardState);
-                history.saveHistory();
-            } while (!_Rule.checkWinner());
+                //history.saveHistory();
+                _CurrentSteps++;
+            } while (!_Rule.checkWinner(_BoardState, coordinate, player.Piece));
+            //Clear();
+            displayWinner(player);
+
+            ReadKey();
         }
 
 
@@ -114,6 +120,13 @@ namespace BoardGame
             string player;
             player = _CurrentSteps % 2 == 0 ? "Player 2" : "PLayer 1";
             WriteLine($"Now it's {player}'s turn");
+        }
+
+        public void displayWinner(Player player)
+        {
+            if (player == _Player1) WriteLine($"Winner is Player 1!");
+            else WriteLine($"Winner is {_Competitor}!");
+
         }
     }
 }
