@@ -25,7 +25,7 @@ namespace BoardGame
             gameHistory.Remove(coordinate);
         }
 
-        public void saveHistory(Piece piece, Player competitor, int difficulty)
+        public void saveHistory(bool piece, bool competitor, int difficulty)
         {
             try
             {
@@ -35,15 +35,12 @@ namespace BoardGame
 
                 Console.WriteLine("Start saving...");
 
-                string stringPiece = piece == new BlackPiece() ? "true" : "false"; //true = black
-                string stringCompetitor = competitor == new Human() ? "true" : "false"; //true = human
-
-                writer.WriteLine(stringPiece);
-                writer.WriteLine(stringCompetitor);
+                writer.WriteLine(piece); //true = black
+                writer.WriteLine(competitor); //true = human
 
                 Console.WriteLine("Work in progress...");
                 
-                if (stringCompetitor == "false") writer.WriteLine(difficulty);
+                if (!competitor) writer.WriteLine(difficulty);
                 else writer.WriteLine();
 
                 Console.WriteLine("attributes saved.");
@@ -77,7 +74,7 @@ namespace BoardGame
                 string record = reader.ReadToEnd();
                 string[] lines;
                 bool[] attributes = new bool[3];
-                
+
                 if (record != null)
                 {
                     lines = record.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
@@ -93,17 +90,16 @@ namespace BoardGame
                         }
                     }
 
-                    if (lines[0] == "false") attributes[0] = false;
+                    if (lines[0] == "False") attributes[0] = false;
                     else attributes[0] = true;
 
-                    if (lines[1] == "false") attributes[1] = false;
+                    if (lines[1] == "False") attributes[1] = false;
                     else attributes[1] = true;
 
-                    if (lines[2] == "0") attributes[2] = false;
+                    if (lines[2] == null) attributes[2] = false;
                     else attributes[2] = true;
                 }
                 reader.Close();
-                inFile.Close();
                 // return piece and history
                 return attributes;
             }

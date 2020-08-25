@@ -9,7 +9,7 @@ namespace BoardGame
         protected Human _Player1;
         protected Player _Competitor;
         protected Piece _CompeitorColour;
-        protected int difficulty;
+        protected int _Difficulty;
         protected int _CurrentSteps = 1;
         protected Rule _Rule;
         protected string[,] _BoardState;
@@ -36,13 +36,13 @@ namespace BoardGame
             Write("Please select difficulty.." +
                 "\n1. Easy\t2.Difficult" +
                 "\n>> ");
-            bool isDifficulty = int.TryParse(ReadLine(), out int difficulty);
+            bool isDifficulty = int.TryParse(ReadLine(), out _Difficulty);
             while(!isDifficulty)
             {
                 Write("Invalid input, please enter again >> ");
-                isDifficulty = int.TryParse(ReadLine(), out difficulty);
+                isDifficulty = int.TryParse(ReadLine(), out _Difficulty);
             }
-            return new Computer(competitorPiece, difficulty);
+            return new Computer(competitorPiece, _Difficulty);
         }
 
         protected Player chooseCompetitor(bool competitor)
@@ -116,7 +116,9 @@ namespace BoardGame
             if(userInput == "Y" || userInput == "y")
             {
                 // Save game history.
-                history.saveHistory(_Player1.Piece, _Competitor, difficulty);
+                bool piece = _Player1.Piece.ToString().Contains("BlackPiece") ? true : false;
+                bool competitor = _Competitor.ToString().Contains("Human") ? true : false;
+                history.saveHistory(piece, competitor, _Difficulty);
                 isLeave = true;
             }
 
@@ -155,7 +157,8 @@ namespace BoardGame
                 bool competitor = attributes[1];
                 bool difficulty = attributes[2];
                 _Player1 = new Human(chooseColour(colour));
-                _Competitor = chooseCompetitor(competitor);
+                if (competitor) _Competitor = new Human(_CompeitorColour);
+                else _Competitor = new Computer(_CompeitorColour, 1);
                 _CurrentSteps = history.gameHistory.Count;
             }
             else WriteLine("Error occurred while parsing the file.");

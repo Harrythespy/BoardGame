@@ -20,7 +20,7 @@ namespace BoardGame
         public Point getCoordinate(string[,] boardState)
         {
             char[] DELIM = { ' ', ',' };
-            Write("Enter a coordinate >> ");
+            Write("Enter a coordinate: row, col >> ");
             _InputCoordinate = ReadLine();
 
             while (_InputCoordinate == "")
@@ -78,7 +78,6 @@ namespace BoardGame
                 }
 
                 _Coordinate = new Point(x - 1, y - 1);
-                //WriteLine($"input coordinate: {_Coordinate}");
             }
 
             return _Coordinate;

@@ -48,7 +48,9 @@ namespace BoardGame
                     WriteLine("Cannot find the given rule.");
                     break;
             }
+
             Game game;
+
             Write("Load exitsed game from directory? Y/n >> ");
             string userInput = ReadLine();
             if (userInput == "Y" || userInput == "y")

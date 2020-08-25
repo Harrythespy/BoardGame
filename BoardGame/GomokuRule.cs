@@ -109,11 +109,13 @@ namespace BoardGame
             for (int i = coordinate.Y - 1; i >= 0; i--)
             {
                 if (boardState[coordinate.X, i] == piece) ++countPiece;
+                else break;
             }
             // search backward
             for (int i = coordinate.Y + 1; i < boardState.GetLength(1); i++)
             {
                 if (boardState[coordinate.X, i] == piece) ++countPiece;
+                else break;
             }
             if (countPiece >= 4) return true;
             else return false;
@@ -126,11 +128,13 @@ namespace BoardGame
             for (int i = coordinate.X - 1; i >= 0; i--)
             {
                 if (boardState[i, coordinate.Y] == piece) ++countPiece;
+                else break;
             }
             // search backward
             for (int i = coordinate.X + 1; i < boardState.GetLength(0); i++)
             {
                 if (boardState[i, coordinate.Y] == piece) ++countPiece;
+                else break;
             }
             if (countPiece >= 4) return true;
             else return false;
@@ -146,6 +150,7 @@ namespace BoardGame
                 if (j >= 0)
                 {
                     if (boardState[i, j] == piece) countPiece++;
+                    else break;
                 }
             }
             j = coordinate.Y + 1;
@@ -154,6 +159,7 @@ namespace BoardGame
                 if (j < boardState.GetLength(1))
                 {
                     if (boardState[i, j] == piece) countPiece++;
+                    else break;
                 }
             }
             if (countPiece >= 4) return true;
@@ -169,6 +175,7 @@ namespace BoardGame
                 if (j < boardState.GetLength(1))
                 {
                     if (boardState[i, j] == piece) countPiece++;
+                    else break;
                 }
             }
             j = coordinate.Y - 1;
@@ -177,6 +184,7 @@ namespace BoardGame
                 if (j >= 0)
                 {
                     if (boardState[i, j] == piece) countPiece++;
+                    else break;
                 }
             }
             if (countPiece >= 4) return true;
