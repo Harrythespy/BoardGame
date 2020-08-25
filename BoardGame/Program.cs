@@ -9,8 +9,6 @@ namespace BoardGame
     {
         public static void Main(string[] args)
         {
-            const string END = "END";
-
             // Games that can play in the program.
             string[] games = { "Gomoku" , "Othello", "Mills" };
 
@@ -51,13 +49,26 @@ namespace BoardGame
                     break;
             }
 
-            bool isComputer = selectedCompetitor();
-            bool isBlack = selectedPieceColour();
-            Clear();
-            // Initial the selected game
-            Game game = new Game(rule, isComputer, isBlack);
-            game.initialGame();
-
+            Write("Load exitsed game from directory? Y/n >> ");
+            string userInput = ReadLine();
+            if (userInput == "Y" || userInput == "y")
+            {
+                Game game = new Game(rule);
+                game.initialGame();
+            }
+            else
+            {
+                bool isComputer = selectedCompetitor();
+                bool isBlack = selectedPieceColour();
+                Clear();
+                // Initial the selected game
+                Game game = new Game(rule, isComputer, isBlack);
+                game.initialGame();
+            }
+            
+            
+            
+            
         }
 
         public static bool selectedCompetitor()

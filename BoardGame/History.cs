@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace BoardGame
 {
@@ -36,11 +37,59 @@ namespace BoardGame
             }
             writer.Close();
             outFile.Close();
+
+            Console.WriteLine("Game history saved successfully.");
         }
 
-        public void loadHistory()
+        public bool[] loadHistory(string FILEPATH)
         {
             // Load saved board states from directory
+            try
+            {
+                FileStream inFile = new FileStream(FILEPATH, FileMode.Open, FileAccess.Read);
+                StreamReader reader = new StreamReader(inFile);
+
+                string record = reader.ReadToEnd();
+                string[] lines;
+                bool[] attributes = new bool[3];
+                
+                if (record != null)
+                {
+                    lines = record.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+                    for (int i = 3; i < lines.Length; i++)
+                    {
+                        string[] coors = new Regex(@"\D+").Split(lines[i]);
+                        if (coors[0] != null && coors[1] != null)
+                        {
+                            int x = Convert.ToInt32(coors[1]);
+                            int y = Convert.ToInt32(coors[2]);
+                            gameHistory.Add(new Point(x, y));
+                        }
+                    }
+
+                    if (lines[0] == "false") attributes[0] = false;
+                    else attributes[0] = true;
+
+                    if (lines[1] == "false") attributes[1] = false;
+                    else attributes[1] = true;
+
+                    if (lines[2] == "0") attributes[2] = false;
+                    else attributes[2] = true;
+                }
+                reader.Close();
+                inFile.Close();
+                // return piece and history
+                return attributes;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error occurred while processing the file.");
+                Console.WriteLine(e.Message);
+            }
+
+            return null;
+
         }
     }
 }

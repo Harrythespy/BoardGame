@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{EF7B4FC3-48DA-4A42-941D-4FDA3398E3AA}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="BoardGame/History.cs">
     <Files>
-      <File FileName="BoardGame/Program.cs" Line="60" Column="1" />
-      <File FileName="BoardGame/BoardGame.cs" Line="62" Column="30" />
-      <File FileName="BoardGame/History.cs" Line="38" Column="29" />
+      <File FileName="BoardGame/Program.cs" Line="100" Column="38" />
+      <File FileName="BoardGame/BoardGame.cs" Line="167" Column="29" />
+      <File FileName="BoardGame/History.cs" Line="58" Column="27" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
