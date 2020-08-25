@@ -3,12 +3,15 @@ namespace BoardGame
 {
     public class Computer : Player
     {
-        int[] difficultyIndex = { 1, 2 };
+        public int _Difficulty;
         new Piece Piece;
+
+        public Computer() { }
 
         public Computer(Piece piece, int difficulty) :base(piece)
         {
-            Piece = piece;    
+            Piece = piece;
+            _Difficulty = difficulty;
         }
 
     }

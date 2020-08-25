@@ -8,6 +8,8 @@ namespace BoardGame
     {
         public new Piece Piece { get; set; }
 
+        public Human() { }
+
         public Human(Piece piece) :base(piece)
         {
             Piece = piece;

@@ -9,6 +9,7 @@ namespace BoardGame
         protected Human _Player1;
         protected Player _Competitor;
         protected Piece _CompeitorColour;
+        protected int difficulty;
         protected int _CurrentSteps = 1;
         protected Rule _Rule;
         protected string[,] _BoardState;
@@ -65,6 +66,7 @@ namespace BoardGame
 
         public void initialGame()
         {
+            isOver = false;
             // decide player term
             Player player;
             Point coordinate;
@@ -109,15 +111,16 @@ namespace BoardGame
         public void leaveGame()
         {
             // Save game and leave
-            Write("Would you like to save the game? Y/n");
-            if(ReadLine() == "Y" || ReadLine() == "y")
+            Write("\nWould you like to save the game history? Y/n >> ");
+            string userInput = ReadLine();
+            if(userInput == "Y" || userInput == "y")
             {
                 // Save game history.
-                history.saveHistory();
+                history.saveHistory(_Player1.Piece, _Competitor, difficulty);
                 isLeave = true;
             }
 
-            WriteLine("Bye bye, see you next time!");
+            WriteLine("\nBye bye, see you next time!");
             ReadKey();
         }
 

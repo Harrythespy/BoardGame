@@ -10,6 +10,8 @@ namespace BoardGame
         protected Point _Coordinate;
         public Piece Piece { get; set; }
 
+        public Player() {}
+
         public Player(Piece piece)
         {
             Piece = piece;

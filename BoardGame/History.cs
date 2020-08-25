@@ -25,20 +25,45 @@ namespace BoardGame
             gameHistory.Remove(coordinate);
         }
 
-        public void saveHistory()
+        public void saveHistory(Piece piece, Player competitor, int difficulty)
         {
-            // Export current board states
-            FileStream outFile = new FileStream(FILENAME, FileMode.Create, FileAccess.Write);
-            StreamWriter writer = new StreamWriter(outFile);
-            foreach(Point coor in gameHistory)
+            try
             {
-                System.Console.WriteLine(coor);
-                writer.WriteLine(coor);
-            }
-            writer.Close();
-            outFile.Close();
+                // Export current board states
+                FileStream outFile = new FileStream(FILENAME, FileMode.Create, FileAccess.Write);
+                StreamWriter writer = new StreamWriter(outFile);
 
-            Console.WriteLine("Game history saved successfully.");
+                Console.WriteLine("Start saving...");
+
+                string stringPiece = piece == new BlackPiece() ? "true" : "false"; //true = black
+                string stringCompetitor = competitor == new Human() ? "true" : "false"; //true = human
+
+                writer.WriteLine(stringPiece);
+                writer.WriteLine(stringCompetitor);
+
+                Console.WriteLine("Work in progress...");
+                
+                if (stringCompetitor == "false") writer.WriteLine(difficulty);
+                else writer.WriteLine();
+
+                Console.WriteLine("attributes saved.");
+
+                foreach (Point coor in gameHistory)
+                {
+                    writer.WriteLine(coor);
+                }
+
+                Console.WriteLine("History saved.");
+                writer.Close();
+                outFile.Close();
+
+                Console.WriteLine("Game history saved successfully.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error occurred while saving game history..");
+                Console.WriteLine(e.Message);
+            }
         }
 
         public bool[] loadHistory(string FILEPATH)

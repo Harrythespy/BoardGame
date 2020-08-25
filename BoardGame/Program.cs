@@ -48,12 +48,12 @@ namespace BoardGame
                     WriteLine("Cannot find the given rule.");
                     break;
             }
-
+            Game game;
             Write("Load exitsed game from directory? Y/n >> ");
             string userInput = ReadLine();
             if (userInput == "Y" || userInput == "y")
             {
-                Game game = new Game(rule);
+                game = new Game(rule);
                 game.initialGame();
             }
             else
@@ -62,11 +62,29 @@ namespace BoardGame
                 bool isBlack = selectedPieceColour();
                 Clear();
                 // Initial the selected game
-                Game game = new Game(rule, isComputer, isBlack);
+                game = new Game(rule, isComputer, isBlack);
                 game.initialGame();
             }
             
-            
+            while(game.isOver)
+            {
+                Write("\nStart another game? Y/n >> ");
+                userInput = ReadLine();
+                if (userInput == "Y" || userInput == "y")
+                {
+                    Clear();
+                    bool isComputer = selectedCompetitor();
+                    bool isBlack = selectedPieceColour();
+                    Clear();
+                    // Initial the selected game
+                    game = new Game(rule, isComputer, isBlack);
+                    game.initialGame();
+                }
+                else
+                {
+                    game.leaveGame();
+                }
+            }
             
             
         }
