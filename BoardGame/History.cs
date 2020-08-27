@@ -33,28 +33,28 @@ namespace BoardGame
                 FileStream outFile = new FileStream(FILENAME, FileMode.Create, FileAccess.Write);
                 StreamWriter writer = new StreamWriter(outFile);
 
-                Console.WriteLine("Start saving...");
+                //Console.WriteLine("Start saving...");
 
                 writer.WriteLine(piece); //true = black
                 writer.WriteLine(competitor); //true = human
 
-                Console.WriteLine("Work in progress...");
+                //Console.WriteLine("Work in progress...");
                 
                 if (!competitor) writer.WriteLine(difficulty);
                 else writer.WriteLine();
 
-                Console.WriteLine("attributes saved.");
+                //Console.WriteLine("attributes saved.");
 
                 foreach (Point coor in gameHistory)
                 {
                     writer.WriteLine(coor);
                 }
 
-                Console.WriteLine("History saved.");
+                //Console.WriteLine("History saved.");
                 writer.Close();
                 outFile.Close();
 
-                Console.WriteLine("Game history saved successfully.");
+                //Console.WriteLine("Game history saved successfully.");
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace BoardGame
                 {
                     lines = record.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
-                    for (int i = 3; i < lines.Length; i++)
+                    for (int i = 3; i < lines.Length - 1; i++)
                     {
                         string[] coors = new Regex(@"\D+").Split(lines[i]);
                         if (coors[0] != null && coors[1] != null)

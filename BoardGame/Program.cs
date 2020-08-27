@@ -56,6 +56,7 @@ namespace BoardGame
             if (userInput == "Y" || userInput == "y")
             {
                 game = new Game(rule);
+                game.loadGame();
                 game.initialGame();
             }
             else
@@ -70,25 +71,35 @@ namespace BoardGame
             
             while(game.isOver)
             {
-                Write("\nStart another game? Y/n >> ");
+                Write("Start another game? Y/n >> ");
                 userInput = ReadLine();
                 if (userInput == "Y" || userInput == "y")
                 {
                     Clear();
-                    bool isComputer = selectedCompetitor();
-                    bool isBlack = selectedPieceColour();
-                    Clear();
-                    // Initial the selected game
-                    game = new Game(rule, isComputer, isBlack);
-                    game.initialGame();
+
+                    Write("Load exitsed game from directory? Y/n >> ");
+                    userInput = ReadLine();
+                    if (userInput == "Y" || userInput == "y")
+                    {
+                        game = new Game(rule);
+                        game.loadGame();
+                        game.initialGame();
+                    }
+                    else
+                    {
+                        bool isComputer = selectedCompetitor();
+                        bool isBlack = selectedPieceColour();
+                        //Clear();
+                        // Initial the selected game
+                        game = new Game(rule, isComputer, isBlack);
+                        game.initialGame();
+                    }
                 }
                 else
                 {
                     game.leaveGame();
                 }
             }
-            
-            
         }
 
         public static bool selectedCompetitor()

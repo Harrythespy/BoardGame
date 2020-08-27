@@ -15,13 +15,12 @@ namespace BoardGame
         protected string[,] _BoardState;
         protected History history = new History();
         public bool isOver = false;
-        public bool isLeave = false;
+        protected bool isWinner = false;
 
         public BoardGame(Rule rule)
         {
             _Rule = rule;
             _BoardState = rule.initialiBoard();
-            loadGame();
         }
         public BoardGame(Rule rule, bool competitor, bool colour)
         {
@@ -37,13 +36,15 @@ namespace BoardGame
         {
             int[] indcies = new Computer().difficultyIndices;
             Write("\nEnter index of difficulty.." +
-                "\n1. Easy\t2.Difficult" +
+                "\n1. Easy(Random Selection)\t2.Difficult(Simple Rule)" +
                 "\n>> ");
-            bool isDifficulty = int.TryParse(ReadLine(), out _Difficulty);
+            string userInput = ReadLine();
+            bool isDifficulty = int.TryParse(userInput, out _Difficulty);
             while(!isDifficulty || !Array.Exists<int>(indcies, element => element == _Difficulty))
             {
                 Write("Invalid input, please enter again >> ");
-                isDifficulty = int.TryParse(ReadLine(), out _Difficulty);
+                userInput = ReadLine();
+                isDifficulty = int.TryParse(userInput, out _Difficulty);
             }
         }
 
@@ -92,17 +93,28 @@ namespace BoardGame
                 displayTerms();
                 // get the coordinate from player
                 coordinate = player.Move(_BoardState);
+                if (coordinate == new Point(-1, -1))
+                {
+                    break;
+                }
                 _BoardState[coordinate.X, coordinate.Y] = player.Piece.printPiece();
                 // store new state to history
                 history.recordStep(coordinate);
                 // update the board state
                 _Rule.updateBoard(_BoardState);
-                //history.saveHistory();
-                _CurrentSteps++;
-            } while (!_Rule.checkWinner(_BoardState, coordinate, player.Piece));
-            //Clear();
-            displayWinner(player);
 
+                // Save game history.
+                bool piece = _Player1.Piece.ToString().Contains("BlackPiece") ? true : false;
+                history.saveHistory(piece, _Competitor, _Difficulty);
+
+                _CurrentSteps++;
+                isWinner = _Rule.checkWinner(_BoardState, coordinate, player.Piece);
+            } while (!isWinner);
+
+            if (isWinner)
+            {
+                displayWinner(player);
+            }
             isOver = true;
         }
 
@@ -126,19 +138,7 @@ namespace BoardGame
         }
 
         public void leaveGame()
-        {
-            // Save game and leave
-            Write("\nWould you like to save the game history? Y/n >> ");
-            string userInput = ReadLine();
-            if(userInput == "Y" || userInput == "y")
-            {
-                // Save game history.
-                bool piece = _Player1.Piece.ToString().Contains("BlackPiece") ? true : false;
-                bool competitor = _Competitor.ToString().Contains("Human") ? true : false;
-                history.saveHistory(piece, competitor, _Difficulty);
-                isLeave = true;
-            }
-
+        {   
             WriteLine("\nBye bye, see you next time!");
             ReadKey();
         }

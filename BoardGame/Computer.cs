@@ -35,13 +35,11 @@ namespace BoardGame
             
             int row = r.Next(0, boardState.GetLength(0) - 1);
             int col = r.Next(0, boardState.GetLength(1) - 1);
-            Console.WriteLine($"{row}, {col}");
             while (boardState[row, col] != " ")
             {
                 row = r.Next(0, boardState.GetLength(0) - 1);
                 col = r.Next(0, boardState.GetLength(1) - 1);
             }
-            Console.WriteLine(boardState[row, col]);
             return new Point(row, col);
         }
 
