@@ -1,17 +1,17 @@
 ﻿<Properties StartupConfiguration="{EF7B4FC3-48DA-4A42-941D-4FDA3398E3AA}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="BoardGame/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BoardGame/Computer.cs">
     <Files>
-      <File FileName="BoardGame/Program.cs" Line="58" Column="39" />
-      <File FileName="BoardGame/BoardGame.cs" Line="12" Column="23" />
-      <File FileName="BoardGame/History.cs" Line="102" Column="32" />
-      <File FileName="BoardGame/Player.cs" Line="81" Column="17" />
+      <File FileName="BoardGame/BoardGame.cs" Line="100" Column="44" />
+      <File FileName="BoardGame/Program.cs" Line="86" Column="18" />
+      <File FileName="BoardGame/Player.cs" Line="18" Column="10" />
+      <File FileName="BoardGame/Computer.cs" Line="22" Column="70" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BoardGame" expanded="True">
             <Node name="BoardGame" expanded="True">
-              <Node name="Player.cs" selected="True" />
+              <Node name="Computer.cs" selected="True" />
             </Node>
           </Node>
         </State>

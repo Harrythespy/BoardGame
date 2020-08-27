@@ -62,7 +62,7 @@ namespace BoardGame
             {
                 bool isComputer = selectedCompetitor();
                 bool isBlack = selectedPieceColour();
-                Clear();
+                //Clear();
                 // Initial the selected game
                 game = new Game(rule, isComputer, isBlack);
                 game.initialGame();
@@ -96,19 +96,19 @@ namespace BoardGame
             string[] yes = { "Y", "y" };
             string[] no = { "N", "n" };
             // Select competitor
-            Write("Play with AI? Y\\N >> ");
+            Write("\nPlay with AI? Y/n >> ");
             string userInput = ReadLine();
             while ( !yes.Contains(userInput) && !no.Contains(userInput) )
             {
                 Write("Invalid input, try again >> ");
                 userInput = ReadLine();
             }
-            return userInput == "Y" ? false : true;
+            return (userInput == "Y" || userInput == "y") ? false : true;
         }
 
         public static bool selectedPieceColour()
         {
-            Write("Select your piece colour:" +
+            Write("\nEnter index of piece colour:" +
                 "\n1. Black\t2. White" +
                 "\n>> ");
             bool isColour = int.TryParse(ReadLine(), out int colour);
