@@ -6,8 +6,10 @@ namespace BoardGame
 {
     public class Human : Player
     {
+        const string HELP = "HELP";
         private string _InputCoordinate;
         public new Piece Piece { get; set; }
+        
 
         public Human() { }
 
@@ -18,10 +20,9 @@ namespace BoardGame
 
         public override Point Move(string[,] boardState)
         {
-            const string END = "END";
             char[] DELIM = { ' ', ',' };
             Write("Enter a coordinate: row, col " +
-                "\nLeave the game: END" +
+                "\nHelp: HELP" +
                 "\n>> ");
             _InputCoordinate = ReadLine();
 
@@ -31,10 +32,12 @@ namespace BoardGame
                     "\nTry again >> ");
                 _InputCoordinate = ReadLine();
             }
-            if (_InputCoordinate == END)
+
+            if (_InputCoordinate == HELP)
             {
                 return new Point(-1, -1);
             }
+
             else
             {
                 string[] axises = _InputCoordinate.Split(DELIM);
@@ -58,7 +61,7 @@ namespace BoardGame
                 }
 
                 _Coordinate = new Point(x - 1, y - 1);
-                //WriteLine($"input coordinate: {_Coordinate}");
+
 
                 while (!checkValidity(_Coordinate, boardState))
                 {

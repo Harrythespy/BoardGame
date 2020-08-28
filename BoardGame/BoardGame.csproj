@@ -44,6 +44,7 @@
     <Compile Include="Computer.cs" />
     <Compile Include="BlackPiece.cs" />
     <Compile Include="History.cs" />
+    <Compile Include="Help.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

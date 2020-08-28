@@ -13,6 +13,7 @@ namespace BoardGame
         protected int _CurrentSteps = 1;
         protected Rule _Rule;
         protected string[,] _BoardState;
+        protected Help help = new Help();
         protected History history = new History();
         public bool isOver = false;
         protected bool isWinner = false;
@@ -27,9 +28,8 @@ namespace BoardGame
             _Rule = rule;
             _BoardState = rule.initialiBoard();
             _Player1 = new Human(chooseColour(colour));
-            //_Competitor = chooseCompetitor(competitor);
             _Competitor = competitor;
-            selectDifficulty();
+            if (!competitor) selectDifficulty();
         }
 
         protected void selectDifficulty()
@@ -66,9 +66,10 @@ namespace BoardGame
             // decide player term
             Player player;
             Point coordinate;
-            _Rule.updateBoard(_BoardState);
+            //_Rule.updateBoard(_BoardState);
             do
             {
+                
                 while (_CurrentSteps > 1)
                 {
                     // undo the previous step
@@ -80,28 +81,34 @@ namespace BoardGame
                         Point prevStep = history.gameHistory[_CurrentSteps - 1];
                         history.undoStep(prevStep);
                         _BoardState[prevStep.X, prevStep.Y] = " ";
-                        _Rule.updateBoard(_BoardState);
                     }
                     else
                     {
                         Clear();
-                        _Rule.updateBoard(_BoardState);
                         break;
                     }
                 }
+                // update the board state
+                _Rule.updateBoard(_BoardState);
+
                 player = _CurrentSteps % 2 == 0 ? competitor : _Player1;
                 displayTerms();
                 // get the coordinate from player
                 coordinate = player.Move(_BoardState);
                 if (coordinate == new Point(-1, -1))
                 {
-                    break;
+                    string command = help.displayCommand();
+                    if(command == "END")
+                    {
+                        Clear();
+                        break;
+                    }
+
                 }
                 _BoardState[coordinate.X, coordinate.Y] = player.Piece.printPiece();
                 // store new state to history
                 history.recordStep(coordinate);
-                // update the board state
-                _Rule.updateBoard(_BoardState);
+                
 
                 // Save game history.
                 bool piece = _Player1.Piece.ToString().Contains("BlackPiece") ? true : false;
@@ -111,15 +118,14 @@ namespace BoardGame
                 isWinner = _Rule.checkWinner(_BoardState, coordinate, player.Piece);
             } while (!isWinner);
 
-            if (isWinner)
-            {
-                displayWinner(player);
-            }
+            if (isWinner) displayWinner(player);
             isOver = true;
+
         }
 
         public void initialGame()
         {
+            Clear();
             isOver = false;
 
             if (_Competitor)
@@ -138,7 +144,8 @@ namespace BoardGame
         }
 
         public void leaveGame()
-        {   
+        {
+            isOver = true;
             WriteLine("\nBye bye, see you next time!");
             ReadKey();
         }
