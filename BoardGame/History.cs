@@ -8,11 +8,14 @@ namespace BoardGame
 {
     public class History
     {
-        private const string FILENAME = "BoardHistory.txt";
+        public const string FILENAME = "BoardHistory.txt";
         public List<Point> gameHistory = new List<Point>();
 
         public History(){}
-
+        public string FileName
+        {
+            get { return FILENAME; }
+        }
         public void recordStep(Point coordinate)
         {
             // Save current move to history
@@ -63,7 +66,7 @@ namespace BoardGame
             }
         }
 
-        public bool[] loadHistory(string FILEPATH)
+        public int[] loadHistory(string FILEPATH)
         {
             // Load saved board states from directory
             try
@@ -73,7 +76,7 @@ namespace BoardGame
 
                 string record = reader.ReadToEnd();
                 string[] lines;
-                bool[] attributes = new bool[3];
+                int[] attributes = new int[3];
 
                 if (record != null)
                 {
@@ -90,14 +93,15 @@ namespace BoardGame
                         }
                     }
 
-                    if (lines[0] == "False") attributes[0] = false;
-                    else attributes[0] = true;
+                    if (lines[0] == "False") attributes[0] = 0;
+                    else attributes[0] = 1;
 
-                    if (lines[1] == "False") attributes[1] = false;
-                    else attributes[1] = true;
+                    if (lines[1] == "False") attributes[1] = 0;
+                    else attributes[1] = 1;
 
-                    if (lines[2] == null) attributes[2] = false;
-                    else attributes[2] = true;
+                    if (lines[2] == null) attributes[2] = 0;
+                    else if (lines[2] == "1") attributes[2] = 1;
+                    else attributes[2] = 2;
                 }
                 reader.Close();
                 // return piece and history

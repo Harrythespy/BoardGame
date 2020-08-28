@@ -6,7 +6,6 @@ namespace BoardGame
 {
     public abstract class Player
     {
-        protected Point _Coordinate;
 
         public Piece Piece { get; set; }
 

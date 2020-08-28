@@ -11,7 +11,7 @@ namespace BoardGame
 
         public string displayCommand()
         {
-            Clear();
+            //Clear();
             Write("Commands that available in the program are listed below:" +
                 $"\n{END} - Leave the game." +
                 $"\n>> ");

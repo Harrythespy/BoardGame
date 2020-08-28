@@ -6,13 +6,13 @@ namespace BoardGame
 {
     public abstract class BoardGame
     {
-        protected Human _Player1;
-        protected bool _Competitor;
-        protected Piece _CompeitorColour;
         protected int _Difficulty;
         protected int _CurrentSteps = 1;
-        protected Rule _Rule;
+        protected bool _Competitor;
         protected string[,] _BoardState;
+        protected Human _Player1;
+        protected Piece _CompeitorColour;
+        protected Rule _Rule;
         protected Help help = new Help();
         protected History history = new History();
         public bool isOver = false;
@@ -21,12 +21,12 @@ namespace BoardGame
         public BoardGame(Rule rule)
         {
             _Rule = rule;
-            _BoardState = rule.initialiBoard();
+            _BoardState = rule.initialBoard();
         }
         public BoardGame(Rule rule, bool competitor, bool colour)
         {
             _Rule = rule;
-            _BoardState = rule.initialiBoard();
+            _BoardState = rule.initialBoard();
             _Player1 = new Human(chooseColour(colour));
             _Competitor = competitor;
             if (!competitor) selectDifficulty();
@@ -66,56 +66,57 @@ namespace BoardGame
             // decide player term
             Player player;
             Point coordinate;
-            //_Rule.updateBoard(_BoardState);
             do
             {
-                
-                while (_CurrentSteps > 1)
+                Clear();
+                _Rule.updateBoard(_BoardState);
+                if (_CurrentSteps > 1)
                 {
                     // undo the previous step
                     Write($"Undo the previous step? Y/n >> ");
                     string userInput = ReadLine();
                     if (userInput == "Y" || userInput == "y")
                     {
-                        _CurrentSteps--;
+                        Clear();
+                        --_CurrentSteps;
                         Point prevStep = history.gameHistory[_CurrentSteps - 1];
                         history.undoStep(prevStep);
                         _BoardState[prevStep.X, prevStep.Y] = " ";
                     }
                     else
-                    {
                         Clear();
-                        break;
-                    }
+                    _Rule.updateBoard(_BoardState);
                 }
-                // update the board state
-                _Rule.updateBoard(_BoardState);
-
+                
                 player = _CurrentSteps % 2 == 0 ? competitor : _Player1;
+
                 displayTerms();
+                
                 // get the coordinate from player
                 coordinate = player.Move(_BoardState);
+
                 if (coordinate == new Point(-1, -1))
                 {
                     string command = help.displayCommand();
-                    if(command == "END")
+                    if (command == "END")
                     {
                         Clear();
                         break;
                     }
 
                 }
+
                 _BoardState[coordinate.X, coordinate.Y] = player.Piece.printPiece();
                 // store new state to history
                 history.recordStep(coordinate);
-                
 
                 // Save game history.
                 bool piece = _Player1.Piece.ToString().Contains("BlackPiece") ? true : false;
                 history.saveHistory(piece, _Competitor, _Difficulty);
 
-                _CurrentSteps++;
                 isWinner = _Rule.checkWinner(_BoardState, coordinate, player.Piece);
+                _CurrentSteps++;
+                
             } while (!isWinner);
 
             if (isWinner) displayWinner(player);
@@ -166,7 +167,8 @@ namespace BoardGame
         public void loadGame()
         {
             Player _Player2;
-            Write("Enter the file path >> ");
+            Write("Enter the file path if you have your own" +
+                $"\nOr enter {history.FileName} >> ");
             string userInput = ReadLine();
             while (userInput == "")
             {
@@ -174,15 +176,24 @@ namespace BoardGame
                 userInput = ReadLine();
             }
 
-            bool[] attributes = history.loadHistory(userInput);
+            int[] attributes = history.loadHistory(userInput);
             if (attributes.Length > 0)
             {
-                bool colour = attributes[0];
-                bool competitor = attributes[1];
-                bool difficulty = attributes[2];
+
+                bool colour = attributes[0] == 0 ? false : true;
+                bool competitor = attributes[1] == 0 ? false : true;
+                int difficulty = attributes[2];
                 _Player1 = new Human(chooseColour(colour));
-                if (competitor) _Player2 = new Human(_CompeitorColour);
-                else _Player2 = new Computer(_CompeitorColour, 1);
+                if (competitor)
+                {
+                    _Player2 = new Human(_CompeitorColour);
+                    _Competitor = competitor;
+                }
+                else
+                {
+                    _Player2 = new Computer(_CompeitorColour, difficulty);
+                    _Difficulty = difficulty;
+                }
                 _CurrentSteps = history.gameHistory.Count;
 
                 int prevStep = _CurrentSteps;
@@ -196,7 +207,8 @@ namespace BoardGame
             }
 
             else WriteLine("Error occurred while parsing the file.");
-            _CurrentSteps++;
+            ++_CurrentSteps;
+            
         }
     }
 }

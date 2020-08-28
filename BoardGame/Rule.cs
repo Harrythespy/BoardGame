@@ -5,7 +5,7 @@ namespace BoardGame
 {
     public interface Rule
     {
-        string[,] initialiBoard();
+        string[,] initialBoard();
         void updateBoard(string[,] boardState);
         bool checkWinner(string[,] boardState, Point coordinate, Piece piece);
     }

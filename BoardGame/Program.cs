@@ -50,7 +50,7 @@ namespace BoardGame
             }
 
             Game game;
-            Write("Load exitsed game from directory? Y/n >> ");
+            Write("Load existing game from directory? Y/n >> ");
             string userInput = ReadLine();
             if (userInput == "Y" || userInput == "y")
             {
@@ -87,7 +87,6 @@ namespace BoardGame
                     {
                         bool isComputer = selectedCompetitor();
                         bool isBlack = selectedPieceColour();
-                        //Clear();
                         // Initial the selected game
                         game = new Game(rule, isComputer, isBlack);
                         game.initialGame();

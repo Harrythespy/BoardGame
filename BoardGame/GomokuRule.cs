@@ -9,7 +9,7 @@ namespace BoardGame
 
         public GomokuRule(){}
 
-        public string[,] initialiBoard()
+        public string[,] initialBoard()
         {
             string[,] initialArr = new string[15, 15];
 
